@@ -25,7 +25,7 @@ run('createSignal.m')
 % Before we can interpolate we define a high sample frequency we know
 % will capture our frequency content. 
 %
-fs = 44.1e3;
+fs = 8000;
 
 % Define a time vector using sample signal upsampled time vector
 %
@@ -42,7 +42,7 @@ t_inter = startT:1/fs:stopT; % Interpolate Time Vector
 splineY = interp1(t_resamp, y, t_inter, 'spline');
 linearY = interp1(t_resamp, y, t_inter, 'linear'); 
 
-% Get the legnth of the Interpreted Signals
+% Get the legnth of the Signals
 %
 xL = length(x);
 yL = length(y);
@@ -72,8 +72,8 @@ linearFFT = 2*abs(linearFFT(1:NFFT4/2+1));
 
 % Define frequency vector
 %
-f = fs/2*linspace(0,1,NFFT/2+1);
-f2 = fs/2*linspace(0,1,NFFT2/2+1);
+fsX = 1/(t(2)-t(1));
+f = fsX/2*linspace(0,1,NFFT/2+1);
 f3 = fs/2*linspace(0,1,NFFT3/2+1);
 f4 = fs/2*linspace(0,1,NFFT4/2+1);
 
@@ -142,15 +142,15 @@ axis2 = axis();
 grid on
 xlabel('freq (Hz)');
 ylabel('Magnitude')
-title('FFT of original signal x(t)');
+title('FFT of Original Signal');
 
 subplot(2,2,2);
-plot(f2, yFFT);
+plot(yFFT);
 axis3 = axis();
 grid on
 xlabel('freq (Hz)');
 ylabel('Magnitude')
-title('FFT of resampled signal y(t)')
+title('FFT of Variable Sampled Signal')
 
 subplot(2,2,3);
 plot(f3, splineFFT);
@@ -158,7 +158,7 @@ axis(axis2);
 grid on
 xlabel('freq (Hz)');
 ylabel('Magnitude')
-title('FFT of Interpolated spline Signal')
+title('FFT of Spline Inter')
 
 subplot(2,2,4);
 plot(f4, linearFFT);
@@ -166,4 +166,4 @@ axis(axis2);
 grid on
 xlabel('freq (Hz)');
 ylabel('Magnitude')
-title('FFT of Interpolated linear Signal');
+title('FFT of Linear Inter');
