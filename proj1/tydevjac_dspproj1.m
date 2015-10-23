@@ -12,8 +12,8 @@ clear; close all; clc;
 % - IMPORT SIGNAL - 
 % -----------------
 % Generate the varying sampled signal. Imports the following variables:
-%     - x        : Orignal Signal (constant sample rate)
-%     - t        : Orignal Signal (constant sampling rates) time vector
+%     - x        : Original Signal (constant sample rate)
+%     - t        : Original Signal (constant sampling rates) time vector
 %     - y        : Variable Sampled Signal (varying sampling rate)
 %     - t_resamp : Variable Sampled Signal (varying sampling rate) 
 %                  time vector
@@ -82,16 +82,17 @@ f4 = fs/2*linspace(0,1,NFFT4/2+1);
 % ---------------
 % Plot original signal
 %
-figure(1);
-subplot(2,1,1);
+figure();
+%subplot(2,1,1);
 plot(t, x);
-title('Orignal Signal');
+title('Original Signal');
 xlabel('Time (s)');
 ylabel('Volts (V)');
 ylim([ceil(min(x)) ceil(max(x))]);
 axis1 = axis();
 grid on
-subplot(2,1,2);
+figure()
+%subplot(2,1,2);
 plot(t_resamp, y, 'color', [1 .4 0]);
 title('Variable Sampled Signal');
 xlabel('Time (s)');
@@ -101,15 +102,16 @@ grid on
 
 % Plot Interpreted Signal
 %
-figure(2);
-subplot(2,1,1);
+figure();
+%subplot(2,1,1);
 plot(t_inter, splineY);
 title('Resampled Signal using Spline Inter');
 xlabel('Time (s)');
 ylabel('Volts (V)');
 axis(axis1);
 grid on
-subplot(2,1,2);
+figure();
+%subplot(2,1,2);
 plot(t_inter, linearY, 'color', [1 .4 0]);
 title('Resampled Signal using Linear Inter');
 xlabel('Time (s)');
@@ -117,25 +119,45 @@ ylabel('Volts (V)');
 axis(axis1);
 grid on
 
+% Stem plot to show sample point
+%
+figure();
+stem(t_resamp, y, 'LineWidth', 2);
+% Find where signal is at 1.5seconds
+[~, samDesir] =  min(abs(t_resamp-1.5));
+axis([t_resamp(samDesir) t_resamp(samDesir+5) -0.5 0.5]);
+title('Variable Sampled Signal Individual Samples');
+xlabel('Time (s)');
+ylabel('Volts (V)');
+grid on
+figure();
+stem(t, x);
+grid on
+title('Original Signal Individual Samples');
+xlabel('Time (s)');
+ylabel('Volts (V)');
+axis([t_resamp(samDesir) t_resamp(samDesir+5) -0.5 0.5]);
+
 % Plot Interpreted Signal Close up overlay
 %
-figure(3);
+figure();
 plot(t_resamp, y, 'LineWidth', 2);
 hold on
-plot(t_inter, splineY, t_inter, linearY);
+plot(t_inter, splineY);
+plot(t_inter, linearY);
 title(['Comparison of Varying Sample Signal and Interpolated Signals ' ...
     '(Zoomed)']);
 xlabel('Time (s)');
 ylabel('Volts (V)');
-legend('Variable Sampled Signal', 'Intr u/ Spline', 'Intr u/ Linear');
+legend('Variable Sampled Signal', 'Intr u/ Spline', 'Intr u/ Linear', ...
+    'Location', 'best');
 %axis(axis1);
 axis([1 1.8 -0.5 0.5]);
 grid on
 
 % Plot Fourier Transform of all our siganls
 %
-figure(4);
-subplot(2,2,1);
+figure();
 plot(f, xFFT);
 xlim([0 50]);
 axis2 = axis();
@@ -144,15 +166,15 @@ xlabel('freq (Hz)');
 ylabel('Magnitude')
 title('FFT of Original Signal');
 
-subplot(2,2,2);
+figure()
 plot(yFFT);
 axis3 = axis();
 grid on
-xlabel('freq (Hz)');
+xlabel('Sample (N)');
 ylabel('Magnitude')
 title('FFT of Variable Sampled Signal')
 
-subplot(2,2,3);
+figure()
 plot(f3, splineFFT);
 axis(axis2);
 grid on
@@ -160,7 +182,7 @@ xlabel('freq (Hz)');
 ylabel('Magnitude')
 title('FFT of Spline Inter')
 
-subplot(2,2,4);
+figure()
 plot(f4, linearFFT);
 axis(axis2);
 grid on
