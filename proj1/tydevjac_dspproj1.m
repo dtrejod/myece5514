@@ -87,7 +87,7 @@ figure();
 plot(t, x);
 title('Original Signal');
 xlabel('Time (s)');
-ylabel('Volts (V)');
+%ylabel('Volts (V)');
 ylim([ceil(min(x)) ceil(max(x))]);
 axis1 = axis();
 grid on
@@ -96,7 +96,7 @@ figure()
 plot(t_resamp, y, 'color', [1 .4 0]);
 title('Variable Sampled Signal');
 xlabel('Time (s)');
-ylabel('Volts (V)');
+%ylabel('Volts (V)');
 axis(axis1);
 grid on
 
@@ -107,7 +107,7 @@ figure();
 plot(t_inter, splineY);
 title('Resampled Signal using Spline Inter');
 xlabel('Time (s)');
-ylabel('Volts (V)');
+%ylabel('Volts (V)');
 axis(axis1);
 grid on
 figure();
@@ -115,7 +115,7 @@ figure();
 plot(t_inter, linearY, 'color', [1 .4 0]);
 title('Resampled Signal using Linear Inter');
 xlabel('Time (s)');
-ylabel('Volts (V)');
+%ylabel('Volts (V)');
 axis(axis1);
 grid on
 
@@ -128,14 +128,14 @@ stem(t_resamp, y, 'LineWidth', 2);
 axis([t_resamp(samDesir) t_resamp(samDesir+5) -0.5 0.5]);
 title('Variable Sampled Signal Individual Samples');
 xlabel('Time (s)');
-ylabel('Volts (V)');
+%ylabel('Volts (V)');
 grid on
 figure();
 stem(t, x);
 grid on
 title('Original Signal Individual Samples');
 xlabel('Time (s)');
-ylabel('Volts (V)');
+%ylabel('Volts (V)');
 axis([t_resamp(samDesir) t_resamp(samDesir+5) -0.5 0.5]);
 
 % Plot Interpreted Signal Close up overlay
@@ -148,7 +148,7 @@ plot(t_inter, linearY);
 title(['Comparison of Varying Sample Signal and Interpolated Signals ' ...
     '(Zoomed)']);
 xlabel('Time (s)');
-ylabel('Volts (V)');
+%ylabel('Volts (V)');
 legend('Variable Sampled Signal', 'Intr u/ Spline', 'Intr u/ Linear', ...
     'Location', 'best');
 %axis(axis1);
