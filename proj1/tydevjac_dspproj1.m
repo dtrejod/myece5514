@@ -12,8 +12,8 @@ clear; close all; clc;
 % - IMPORT SIGNAL - 
 % -----------------
 % Generate the varying sampled signal. Imports the following variables:
-%     - x        : Orignal Signal (constant sample rate)
-%     - t        : Orignal Signal (constant sampling rates) time vector
+%     - x        : Original Signal (constant sample rate)
+%     - t        : Original Signal (constant sampling rates) time vector
 %     - y        : Variable Sampled Signal (varying sampling rate)
 %     - t_resamp : Variable Sampled Signal (varying sampling rate) 
 %                  time vector
@@ -85,7 +85,7 @@ f4 = fs/2*linspace(0,1,NFFT4/2+1);
 figure(1);
 subplot(2,1,1);
 plot(t, x);
-title('Orignal Signal');
+title('Original Signal');
 xlabel('Time (s)');
 ylabel('Volts (V)');
 ylim([ceil(min(x)) ceil(max(x))]);
@@ -135,7 +135,6 @@ grid on
 % Plot Fourier Transform of all our siganls
 %
 figure(4);
-subplot(2,2,1);
 plot(f, xFFT);
 xlim([0 50]);
 axis2 = axis();
@@ -144,7 +143,7 @@ xlabel('freq (Hz)');
 ylabel('Magnitude')
 title('FFT of Original Signal');
 
-subplot(2,2,2);
+figure()
 plot(yFFT);
 axis3 = axis();
 grid on
@@ -152,7 +151,7 @@ xlabel('freq (Hz)');
 ylabel('Magnitude')
 title('FFT of Variable Sampled Signal')
 
-subplot(2,2,3);
+figure()
 plot(f3, splineFFT);
 axis(axis2);
 grid on
@@ -160,7 +159,7 @@ xlabel('freq (Hz)');
 ylabel('Magnitude')
 title('FFT of Spline Inter')
 
-subplot(2,2,4);
+figure()
 plot(f4, linearFFT);
 axis(axis2);
 grid on
