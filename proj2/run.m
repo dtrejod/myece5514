@@ -11,7 +11,7 @@ clear;close all;
 
 % Run training female files
 %
-trainDir = fullfile(pwd, 'train', 'female');
+trainDir = fullfile(pwd, 'data', 'female');
 trainFiles = dir(fullfile(trainDir, '*.mp3'));
 trainFiles = [trainFiles; dir(fullfile(trainDir, '*.wav'))];
 F0_f_avg = [];
@@ -48,7 +48,7 @@ clear trainFiles;
 clear; close all;
 % Repeat for females
 %
-trainDir = fullfile(pwd,'train', 'male');
+trainDir = fullfile(pwd,'data', 'male');
 trainFiles = dir(fullfile(trainDir, '*.mp3'));
 trainFiles = [trainFiles; dir(fullfile(trainDir, '*.wav'))];
 F0_f_avg = [];

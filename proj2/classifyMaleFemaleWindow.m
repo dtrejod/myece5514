@@ -44,8 +44,7 @@ m2 = 100/dx2;
 VAR = abs(Fxvar - F0_var);
 MEAN = Fx_mean - F0_mean;
 
-% Begin making decision
-%
+%begin making decision
 if MEAN >= mid1
     if MEAN <= FEMALE(1)
         ymean = m1*(MEAN-mid1);
@@ -73,7 +72,6 @@ else
         yvar = -50;
     end
 end
-
 % Make Decision
 %
 coff = ymean+yvar;
