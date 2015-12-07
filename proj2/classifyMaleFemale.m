@@ -140,17 +140,16 @@ while in_range
         var_Fx_all(indx_decWin) = var(Fx_all_f);
         mean_Fx_all(indx_decWin)= mean(Fx_all_f);
         
-        [win_identity(indx_decWin), coff] = classifyMaleFemaleWindow(...
+        [win_identity(indx_decWin), coff(indx_decWin)] = classifyMaleFemaleWindow(...
             F0(indx_decWin),...
-            var_F0(indx_decWin), var_Fx_all(indx_decWin), ...
-            mean_Fx_all(indx_decWin));
+            var_F0(indx_decWin), mean_Fx_all(indx_decWin),  ...
+            var_Fx_all(indx_decWin));
         
         % Print the analysis window time frame we are currenlty looking at
         % to the console. 
         %
-        %fprintf('From time = %0.2fs -> %0.2fs\n', ...
-        %     winsam2_old/fs, winsam(2)/fs);
-         
+%         fprintf('From time = %0.2fs -> %0.2fs\n', ...
+%             winsam2_old/fs, winsam(2)/fs);
         % If the energy is really low in the decision inteval we say there
         % is silence
         %
@@ -160,18 +159,19 @@ while in_range
                 'FaceAlpha', 0.2);
             %fprintf('\tDecision: Silence \n\n');
         % Else Classify based off the higher correlation
+        %
         elseif (win_identity(indx_decWin)==0)
             % Overlay decision on signal plot
             area([winsam2_old/fs, winsam(2)/fs], ...
                 [axisy(2) axisy(2)], 'FaceColor', [0.45 0.6 1],...
-                'FaceAlpha', 0.3);
+                'FaceAlpha', .75-coff(indx_decWin)/200);
             % Print decision to console
             %fprintf('\tDecision: Male (Conf = %0.2f%%)\n\n', coff);
         else
             % Overlay decision on signal plot
             area([winsam2_old/fs, winsam(2)/fs], ...
                 [axisy(2) axisy(2)], 'FaceColor', [1 0.6 .75],...
-                'FaceAlpha', 1-0.3);
+                'FaceAlpha', .75-coff(indx_decWin)/200);
             %fprintf('\tDecision: Female (Conf = %0.2f%%)\n\n', coff);
         end
         

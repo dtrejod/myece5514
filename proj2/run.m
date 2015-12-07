@@ -2,8 +2,8 @@
 % Project 2: Predict whether a male/female is speaking in the mp3 file
 % By: Tyler Olivieri; Devin Trejo; Robert Irwin
 
-%% Training
-clear;clc; close all;
+%% Training Female
+clear;close all;
 
 % Training data from:
 % http://www.repository.voxforge1.org/downloads/
@@ -14,44 +14,67 @@ clear;clc; close all;
 trainDir = fullfile(pwd, 'train', 'female');
 trainFiles = dir(fullfile(trainDir, '*.mp3'));
 trainFiles = [trainFiles; dir(fullfile(trainDir, '*.wav'))];
-femaleF0 = [];
-femaleFx = [];
+F0_f_avg = [];
+Fx_f_avg = [];
+F0_f_var = [];
+Fx_f_var = [];
 for file = trainFiles'
-    [F0_i, Fx_i] = trainGenderIdent(fullfile(trainDir, file.name));
-    femaleF0 = [femaleF0 F0_i];
-    femaleFx = [femaleFx Fx_i];
+    [F0i_f_avg, Fxi_f_avg, F0i_f_var, Fxi_f_var] = ...
+        trainGenderIdent(fullfile(trainDir, file.name));
+    F0_f_avg = [F0_f_avg F0i_f_avg];
+    Fx_f_avg = [Fx_f_avg Fxi_f_avg];
+    F0_f_var = [F0_f_var F0i_f_var];
+    Fx_f_var = [Fx_f_var Fxi_f_var];
+    clear F0i_f_avg Fxi_f_avg F0i_f_var Fxi_f_var; 
     clear F0_i Fx_i;
 end
 
+% fprintf('Female: \n\tF0 mu=%0.2f, std=%0.2f\n\tFx mu=%0.2f, std=%0.2f\n',...
+%     mean(femaleF0), std(femaleF0), mean(femaleFx),std(femaleFx));
+fprintf('Female: \n\tF0 meandiff=%0.2f, vardiff=%0.2f\n',...
+    mean(Fx_f_avg-F0_f_avg),mean(abs(F0_f_var-Fx_f_var)));
+
 % Save training output
 %
-dlmwrite(fullfile(pwd, 'train', 'out','female_F0data.txt'),femaleF0);
-dlmwrite(fullfile(pwd, 'train', 'out','female_Fxdata.txt'),femaleFx);
-fprintf('Female: \n\tF0 mu=%0.2f, std=%0.2f\n\tFx mu=%0.2f, std=%0.2f\n',...
-    mean(femaleF0), std(femaleF0), mean(femaleFx),std(femaleFx));
+%
+dlmwrite(fullfile(pwd, 'train', 'out','female_F0avgdata.txt'),F0_f_avg);
+dlmwrite(fullfile(pwd, 'train', 'out','female_Fxavgdata.txt'),Fx_f_avg);
+dlmwrite(fullfile(pwd, 'train', 'out','female_F0vardata.txt'),F0_f_var);
+dlmwrite(fullfile(pwd, 'train', 'out','female_Fxvardata.txt'),Fx_f_var);
+
 clear trainFiles;
 
+%% Training Male
+clear; close all;
 % Repeat for females
 %
 trainDir = fullfile(pwd,'train', 'male');
 trainFiles = dir(fullfile(trainDir, '*.mp3'));
 trainFiles = [trainFiles; dir(fullfile(trainDir, '*.wav'))];
-maleF0 = [];
-maleFx = [];
+F0_f_avg = [];
+Fx_f_avg = [];
+F0_f_var = [];
+Fx_f_var = [];
 for file = trainFiles'
-    [F0_i, Fx_i] = trainGenderIdent(fullfile(trainDir, file.name));
-    maleF0 = [maleF0 F0_i];
-    maleFx = [maleFx Fx_i];
-    clear F0_i Fx_i;
+    [F0i_f_avg, Fxi_f_avg, F0i_f_var, Fxi_f_var] = ...
+        trainGenderIdent(fullfile(trainDir, file.name));
+    F0_f_avg = [F0_f_avg F0i_f_avg];
+    Fx_f_avg = [Fx_f_avg Fxi_f_avg];
+    F0_f_var = [F0_f_var F0i_f_var];
+    Fx_f_var = [Fx_f_var Fxi_f_var];
+    clear F0i_f_avg Fxi_f_avg F0i_f_var Fxi_f_var; 
 end
-fprintf('Male: \n\tF0 mu=%0.2f, std=%0.2f\n\tFx mu=%0.2f, std=%0.2f\n',...
-    mean(maleF0), std(maleF0), mean(maleFx),std(maleFx));
+% fprintf('Male: \n\tF0 mu=%0.2f, std=%0.2f\n\tFx mu=%0.2f, std=%0.2f\n',...
+%     mean(maleF0), std(maleF0), mean(maleFx),std(maleFx));
+fprintf('Male: \n\tF0 meandiff=%0.2f, vardiff=%0.2f\n',...
+    mean(Fx_f_avg-F0_f_avg),mean(abs(F0_f_var-Fx_f_var)));
 
 % Save training output
 %
-dlmwrite(fullfile(pwd, 'train', 'out','male_F0data.txt'),maleF0);
-dlmwrite(fullfile(pwd, 'train', 'out','male_Fxdata.txt'),maleFx);
-
+dlmwrite(fullfile(pwd, 'train', 'out','male_F0avgdata.txt'),F0_f_avg);
+dlmwrite(fullfile(pwd, 'train', 'out','male_Fxavgdata.txt'),Fx_f_avg);
+dlmwrite(fullfile(pwd, 'train', 'out','male_F0vardata.txt'),F0_f_var);
+dlmwrite(fullfile(pwd, 'train', 'out','male_Fxvardata.txt'),Fx_f_var);
 
 %% Classfication
 clear; clc; close all;

@@ -1,7 +1,7 @@
 % This program will read in a audio file and find the fundemental 
 % and harmonics frequencies
 %
-function [F0_f_avg, Fx_f_avg] = trainGenderIdent(fileN)
+function [F0_f_avg, Fx_f_avg, F0_f_var, Fx_f_var] = trainGenderIdent(fileN)
 
 % Read in file
 [sig, fs] = audioread(fileN);
@@ -115,3 +115,5 @@ end
 %
 F0_f_avg = mean(F0_f);
 Fx_f_avg = mean(Fx_all_f);
+F0_f_var = var(F0_f);
+Fx_f_var = var(Fx_all_f);

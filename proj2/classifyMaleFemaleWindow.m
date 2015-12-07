@@ -6,33 +6,28 @@
 % Returns 0 for male, 1 for female
 function [win_identity, coff] = classifyMaleFemaleWindow(F0_mean,...
     F0_var, Fx_mean, Fxvar)
+
 % Read in training results
 %
-maleF0 = dlmread(fullfile(pwd, 'train', 'out', 'male_F0data.txt'));
-femaleF0 = dlmread(fullfile(pwd, 'train', 'out','female_F0data.txt'));
-maleFx = dlmread(fullfile(pwd, 'train', 'out','male_Fxdata.txt'));
-femaleFx = dlmread(fullfile(pwd, 'train', 'out','female_Fxdata.txt'));
+maleF0_f_avg = dlmread(fullfile(pwd, 'train', 'out','male_F0avgdata.txt'));
+maleFx_f_avg = dlmread(fullfile(pwd, 'train', 'out','male_Fxavgdata.txt'));
+maleF0_f_var = dlmread(fullfile(pwd, 'train', 'out','male_F0vardata.txt'));
+maleFx_f_var = dlmread(fullfile(pwd, 'train', 'out','male_Fxvardata.txt'));
 
-% Expect values for fundemental freqeuncy
-%
-maleF0Mean = mean(maleF0); % Expect mean for male frequency
-maleF0Var = var(maleF0);
-femaleF0Mean = mean(femaleF0); % Expected mean for female frequency
-femaleF0Var = var(femaleF0);
-
-% Expect values for harmonic freqeuncies
-%
-maleFxMean = mean(maleFx); % Expect mean for male frequency
-maleFxVar = var(maleFx);
-femaleFxMean = mean(femaleFx); % Expected mean for female frequency
-femaleFxVar = var(femaleFx);
+femaleF0_f_avg = dlmread(fullfile(pwd, 'train', 'out','female_F0avgdata.txt'));
+femaleFx_f_avg = dlmread(fullfile(pwd, 'train', 'out','female_Fxavgdata.txt'));
+femaleF0_f_var = dlmread(fullfile(pwd, 'train', 'out','female_F0vardata.txt'));
+femaleFx_f_var = dlmread(fullfile(pwd, 'train', 'out','female_Fxvardata.txt'));
 
 % Generate classifier
 %
-% MALE = [mean(maleF0Mean) mean(maleF0Var)]
-% FEMALE = [mean(femaleF0Mean) mean(femaleF0Var)]
-MALE = [.9903 1.2762e3];
-FEMALE = [17.6844 2.6318e3];
+MALE1 = mean(maleFx_f_avg-maleF0_f_avg);
+MALE2 = mean(abs(maleFx_f_var-maleF0_f_var));
+FEMALE1 = mean(femaleFx_f_avg-femaleF0_f_avg);
+FEMALE2 = mean(abs(femaleFx_f_var-femaleF0_f_var));
+
+MALE = [MALE1 MALE2];
+FEMALE = [FEMALE1 FEMALE2];
 
 %generate a line for classification
 %change in x
@@ -87,3 +82,6 @@ if(coff > 0)
 else
     win_identity = 0;
 end
+
+% Coff to absolute
+coff = abs(coff);
