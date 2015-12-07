@@ -81,7 +81,7 @@ clear; clc; close all;
 
 % Run Indentification
 %
-classDir = fullfile(pwd, 'data', 'female');
+classDir = fullfile(pwd, 'data', 'male');
 classFiles = dir(fullfile(classDir, '*.mp3'));
 classFiles = [classFiles; dir(fullfile(classDir, '*.wav'))];
 

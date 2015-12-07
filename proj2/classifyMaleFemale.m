@@ -199,10 +199,9 @@ while in_range
     win_edge = winsam(2)-frmLen;
     win_num = win_num + 1;
 end
-
 % Find the most common identification and assign that identification
 %
-identity = mode(win_identity);
+%identity = mode(win_identity);
 
 % Display signal statistics
 %
@@ -212,9 +211,9 @@ fprintf('\tSignal Legnth = %0.3f seconds\n',max(t));
 fprintf('\tTotal Signal Energy = %0.3f V^2*sec\n',energy_sig);
 % Print whether final decision is female or male
 %
-if (identity==0)
-    % Final decision is male
-    fprintf('\tSignal Gender = Male\n\n');
-else
-    fprintf('\tSignal Gender = Female\n\n');
-end
+% if (identity==0)
+%     % Final decision is male
+%     fprintf('\tSignal Gender = Male\n\n');
+% else
+%     fprintf('\tSignal Gender = Female\n\n');
+% end
